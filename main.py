@@ -3,6 +3,7 @@
 
 #Setup
 import re
+PowerLoop = "^"
 MultLoop = "*"
 DivLoop = "/"
 AddLoop = "+"
@@ -10,6 +11,16 @@ SubLoop = "-"
 Solution = []
 
 ##Multiplication
+def power():
+    Power = next(i for i, v in enumerate(Solve) if '^' == v)
+    Power1stValue = Power - 1
+    Power2ndValue = Power + 1
+    PowerEqual = float(Solve[Power1stValue]) ** float(Solve[Power2ndValue])
+    PowerEqual = str(PowerEqual)
+    del Solve[Power1stValue:Power2ndValue + 1]
+    Solve.insert(Power1stValue,PowerEqual)
+    return Solve
+
 def multiply():
     Mult = next(i for i, v in enumerate(Solve) if '*' == v)
     Mult1stValue = Mult - 1
@@ -78,7 +89,10 @@ def MDAS():
     global Solution
     Solution = Solve
     while True:
-        if MultLoop in Solution and DivLoop in Solution:
+        if PowerLoop in Solution or "^" in Solution:
+            Solution = power()
+            continue
+        elif MultLoop in Solution and DivLoop in Solution:
             try:
                 Mult2 = next(i for i, v in enumerate(Solve) if '*' == v)
                 Div2 = next(i for i, v in enumerate(Solve) if '/' == v)
@@ -135,36 +149,36 @@ def entmath(message):
 #Continue
 def ASKTOCONTINUE(message):
     while True:
-        try:
-            Input = input(message)
-            if Input == "Yes":
-                Output1 = "True"
-                return Input
-                break
-            if Input == "No":
-                Output1 = "False"
-                return Input
-                break
-            else:
-                print ("Try again, Yes or No only")
-                continue
-        except ValueError:
-            print("Try again")
-            continue
+        Userinput = input("Retry? (Y/N): ")
+        if Userinput.lower() in ["yes", "y"]:
+            Userinput = "y"
+            break
+        elif Userinput.lower() in ["no", "n"]:
+            Userinput = "n"
+            break
+        else:
+            print("Invalid input. Please enter yes/no.")
+    return Userinput
 
 #Calc
 while True:
     print("Simple Calculator")
     Solve = []
     Userinput = input("Enter your arithmetic: ")
-    Solve = re.split("([*|/|+|-])", Userinput)
-    # print(Solve)
-    MDAS()
-    print("The answer is:", Solution[0])
-    Continue = ASKTOCONTINUE("Continue? Yes or No: ")
-    if Continue == "Yes":
-        Continue = ""
+    try:
+        if '**' in Userinput:
+            Userinput = Userinput.replace('**','^')
+        Solve = re.split("([*|/|+|-|^|])", Userinput)
+        # print(Solve)
+        MDAS()
+        print("The answer is:", Solution[0])
+        Continue = ASKTOCONTINUE("Continue? Yes or No: ")
+        if Continue == "Yes":
+            Continue = ""
+            continue
+        if Continue == "No":
+            Continue = ""
+            break
+    except:
+        print("Invalid Input. Please try again")
         continue
-    if Continue == "No":
-        Continue = ""
-        break
