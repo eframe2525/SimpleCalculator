@@ -161,16 +161,6 @@ def parenthesis():
             break
     return Solve
 
-def entmath(message):
-    while True:
-        try:
-            Userinput = input(message)
-        except ValueError:
-            print ("Try again")
-            continue
-        else:
-            return Userinput
-
 #Continue
 def ASKTOCONTINUE(message):
     while True:
