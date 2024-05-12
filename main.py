@@ -136,6 +136,31 @@ def MDAS():
             break
     return Solution
 
+#Parenthesis
+def parenthesis():
+    global Solve
+    while True:
+        SolveStoretemp = list(Solve)
+        Solve = []
+        Prnthsfirst = next(i for i, v in enumerate(SolveStoretemp) if '(' == v)
+        PrnthsScnd = next(i for i, v in enumerate(SolveStoretemp) if ')' == v)
+        Prnthsfirst = Prnthsfirst - 1
+        del SolveStoretemp[Prnthsfirst]
+        del SolveStoretemp[PrnthsScnd]
+        listcounter = Prnthsfirst + 1
+        for i in range (Prnthsfirst,PrnthsScnd-2):
+            Solve.append(SolveStoretemp[listcounter])
+            listcounter = listcounter + 1
+        Solve = MDAS()
+        SolveAnswer = Solve
+        Solve = []
+        del SolveStoretemp[Prnthsfirst:PrnthsScnd]
+        SolveStoretemp.insert(Prnthsfirst, SolveAnswer[0])
+        Solve = SolveStoretemp
+        if "(" and ")" not in Solve:
+            break
+    return Solve
+
 def entmath(message):
     while True:
         try:
@@ -168,8 +193,12 @@ while True:
     try:
         if '**' in Userinput:
             Userinput = Userinput.replace('**','^')
-        Solve = re.split("([*|/|+|-|^|])", Userinput)
         # print(Solve)
+        elif "(" and ")" in Userinput:
+            Solve = re.split("([(|)|*|/|+|^|-])", Userinput)
+            Solve = parenthesis()
+        else:
+            Solve = re.split("([(|)|*|/|+|^|-])", Userinput)
         MDAS()
         print("The answer is:", Solution[0])
         Continue = ASKTOCONTINUE("Continue? Yes or No: ")
