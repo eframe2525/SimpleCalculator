@@ -144,7 +144,7 @@ def parenthesis():
         Solve = []
         Prnthsfirst = next(i for i, v in enumerate(SolveStoretemp) if '(' == v)
         PrnthsScnd = next(i for i, v in enumerate(SolveStoretemp) if ')' == v)
-        Prnthsfirst = Prnthsfirst - 1
+        Prnthsfirst = Prnthsfirst - 1 # Space from split remove
         del SolveStoretemp[Prnthsfirst]
         del SolveStoretemp[PrnthsScnd]
         listcounter = Prnthsfirst + 1
@@ -189,23 +189,28 @@ def ASKTOCONTINUE(message):
 while True:
     print("Simple Calculator")
     Solve = []
-    Userinput = input("Enter your arithmetic: ")
-    if "{" in Userinput:
+    Userinput = input("Enter your arithmetic: ") #Userentry
+    if "{" in Userinput: #Convert brackets
         Userinput = Userinput.replace('{', '(')
         Userinput = Userinput.replace('}', ')')
-    elif "[" in Userinput:
+    elif "[" in Userinput: #Convert brackets
         Userinput = Userinput.replace('[', '(')
         Userinput = Userinput.replace(']', ')')
     try:
-        if '**' in Userinput:
+        if '**' in Userinput: #Power Converter
             Userinput = Userinput.replace('**','^')
-        elif "(" and ")" in Userinput:
+        elif "(" and ")" in Userinput: #Parenthesis Detector, solves them first.
             Solve = re.split("([(|)|*|/|+|^|-])", Userinput)
             Solve = parenthesis()
-        else:
+        else: #If power and parenthesis does not exist
             Solve = re.split("([(|)|*|/|+|^|-])", Userinput)
         MDAS()
-        print("The answer is:", Solution[0])
+        if float(Solution[0]).is_integer(): #Integer detector
+            Intanswer = ''
+            Intanswer = float(Solution[0])
+            print("The answer is:", int(Intanswer))
+        else: #all other answers
+            print("The answer is:", Solution[0])
         Continue = ASKTOCONTINUE("Continue? Yes or No: ")
         if Continue == "Yes":
             Continue = ""
@@ -215,4 +220,5 @@ while True:
             break
     except:
         print("Invalid Input. Please try again")
+        print()
         continue
