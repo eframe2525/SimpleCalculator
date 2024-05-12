@@ -205,7 +205,12 @@ while True:
         else:
             Solve = re.split("([(|)|*|/|+|^|-])", Userinput)
         MDAS()
-        print("The answer is:", Solution[0])
+        if float(Solution[0]).is_integer():
+            Intanswer = ''
+            Intanswer = float(Solution[0])
+            print("The answer is:", int(Intanswer))
+        else:
+            print("The answer is:", Solution[0])
         Continue = ASKTOCONTINUE("Continue? Yes or No: ")
         if Continue == "Yes":
             Continue = ""
@@ -215,4 +220,5 @@ while True:
             break
     except:
         print("Invalid Input. Please try again")
+        print()
         continue
