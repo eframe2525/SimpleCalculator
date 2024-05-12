@@ -176,10 +176,10 @@ def ASKTOCONTINUE(message):
     while True:
         Userinput = input("Retry? (Y/N): ")
         if Userinput.lower() in ["yes", "y"]:
-            Userinput = "y"
+            Userinput = "Yes"
             break
         elif Userinput.lower() in ["no", "n"]:
-            Userinput = "n"
+            Userinput = "No"
             break
         else:
             print("Invalid input. Please enter yes/no.")
@@ -217,6 +217,7 @@ while True:
             continue
         if Continue == "No":
             Continue = ""
+            print("Thank you for using this Simple Calculator")
             break
     except:
         print("Invalid Input. Please try again")
