@@ -190,10 +190,15 @@ while True:
     print("Simple Calculator")
     Solve = []
     Userinput = input("Enter your arithmetic: ")
+    if "{" in Userinput:
+        Userinput = Userinput.replace('{', '(')
+        Userinput = Userinput.replace('}', ')')
+    elif "[" in Userinput:
+        Userinput = Userinput.replace('[', '(')
+        Userinput = Userinput.replace(']', ')')
     try:
         if '**' in Userinput:
             Userinput = Userinput.replace('**','^')
-        # print(Solve)
         elif "(" and ")" in Userinput:
             Solve = re.split("([(|)|*|/|+|^|-])", Userinput)
             Solve = parenthesis()
