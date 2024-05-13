@@ -4,6 +4,7 @@
 #Setup
 import re
 PowerLoop = "^"
+RootLoop = "r"
 MultLoop = "*"
 DivLoop = "/"
 AddLoop = "+"
@@ -12,7 +13,7 @@ Solution = []
 
 ##Multiplication
 def power():
-    Power = next(i for i, v in enumerate(Solve) if '^' == v)
+    Power = next(i for i, v in reversed(list(enumerate(Solve))) if '^' == v)
     Power1stValue = Power - 1
     Power2ndValue = Power + 1
     PowerEqual = float(Solve[Power1stValue]) ** float(Solve[Power2ndValue])
@@ -20,6 +21,24 @@ def power():
     del Solve[Power1stValue:Power2ndValue + 1]
     Solve.insert(Power1stValue,PowerEqual)
     return Solve
+
+def root():
+    Root = next(i for i, v in reversed(list(enumerate(Solve))) if 'r' == v)
+    Root1stValue = Root - 1
+    Root2ndValue = Root + 1
+    RootEqual = float(Solve[Root1stValue]) ** (1/float(Solve[Root2ndValue]))
+    RootEqual = str(RootEqual)
+    print(RootEqual)
+    print(Solve)
+    del Solve[Root1stValue:Root2ndValue + 1]
+    Solve.insert(Root1stValue,RootEqual)
+    print(Root)
+    print(Root1stValue)
+    print(Root2ndValue)
+    print(RootEqual)
+    print(Solve)
+    return Solve
+
 
 def multiply():
     Mult = next(i for i, v in enumerate(Solve) if '*' == v)
@@ -85,23 +104,47 @@ def subtract():
     return Solve
 
 ##Test new solve
-def MDAS():
+def PEMDAS():
     global Solution
     Solution = Solve
     while True:
-        if PowerLoop in Solution or "^" in Solution:
+        if PowerLoop in Solution and RootLoop in Solution:
+            try:
+                Powercount = next(i for i, v in reversed(list(enumerate(Solve))) if '^' == v)
+                Rootcount = next(i for i, v in reversed(list(enumerate(Solve))) if 'r' == v)
+                print(Powercount)
+                print(Rootcount)
+                print(Solution)
+                print(Solve)
+                print(Powercount < Rootcount)
+                print(Rootcount > Powercount)
+            except:
+                pass
+            if Powercount > Rootcount:
+                Solution = power()
+                continue
+            elif Powercount < Rootcount:
+                Solution = root()
+                print("hello")
+                continue
+            else:
+                break
+        elif PowerLoop in Solution or "^" in Solution:
             Solution = power()
+            continue
+        elif RootLoop in Solution or "r" in Solution:
+            Solution = root()
             continue
         elif MultLoop in Solution and DivLoop in Solution:
             try:
-                Mult2 = next(i for i, v in enumerate(Solve) if '*' == v)
-                Div2 = next(i for i, v in enumerate(Solve) if '/' == v)
+                Multcounter = next(i for i, v in enumerate(Solve) if '*' == v)
+                Divcounter = next(i for i, v in enumerate(Solve) if '/' == v)
             except:
                 pass
-            if Mult2 < Div2:
+            if Multcounter < Divcounter:
                 Solution = multiply()
                 continue
-            elif Mult2 > Div2:
+            elif Multcounter > Divcounter:
                 Solution = divide()
                 continue
             else:
@@ -114,14 +157,14 @@ def MDAS():
             continue
         elif AddLoop in Solution and SubLoop in Solution:
             try:
-                Add2 = next(i for i, v in enumerate(Solve) if '+' == v)
-                Sub2 = next(i for i, v in enumerate(Solve) if '-' == v)
+                Addcounter = next(i for i, v in enumerate(Solve) if '+' == v)
+                Subcounter = next(i for i, v in enumerate(Solve) if '-' == v)
             except:
                 pass
-            if Add2 < Sub2:
+            if Addcounter < Subcounter:
                 Solution = addition()
                 continue
-            elif Add2 > Sub2:
+            elif Addcounter > Subcounter:
                 Solution = subtract()
                 continue
             else:
@@ -151,7 +194,7 @@ def parenthesis():
         for i in range (Prnthsfirst,PrnthsScnd-2):
             Solve.append(SolveStoretemp[listcounter])
             listcounter = listcounter + 1
-        Solve = MDAS()
+        Solve = PEMDAS()
         SolveAnswer = Solve
         Solve = []
         del SolveStoretemp[Prnthsfirst:PrnthsScnd]
@@ -176,25 +219,34 @@ def ASKTOCONTINUE(message):
     return Userinput
 
 #Calc
+print("Simple Calculator")
+print("Note: Solves PEMDAS equations")
 while True:
-    print("Simple Calculator")
+
     Solve = []
-    Userinput = input("Enter your arithmetic: ") #Userentry
-    if "{" in Userinput: #Convert brackets
-        Userinput = Userinput.replace('{', '(')
-        Userinput = Userinput.replace('}', ')')
-    elif "[" in Userinput: #Convert brackets
-        Userinput = Userinput.replace('[', '(')
-        Userinput = Userinput.replace(']', ')')
-    try:
-        if '**' in Userinput: #Power Converter
+    Userinput = input("Put your math equation: ") #Userentry
+    while True:
+        if "{" in Userinput: #Convert brackets
+            Userinput = Userinput.replace('{', '(')
+            Userinput = Userinput.replace('}', ')')
+        elif "[" in Userinput: #Convert brackets
+            Userinput = Userinput.replace('[', '(')
+            Userinput = Userinput.replace(']', ')')
+        elif '**' in Userinput: #Power Converter
             Userinput = Userinput.replace('**','^')
-        elif "(" and ")" in Userinput: #Parenthesis Detector, solves them first.
-            Solve = re.split("([(|)|*|/|+|^|-])", Userinput)
+        elif "R" in Userinput: #Root Converter
+            Userinput = Userinput.replace('R', 'r')
+        else:
+            break
+    try:
+        if "(" and ")" in Userinput: #Parenthesis Detector, solves them first.
+            Solve = re.split("([|r|(|)|*|/|+|^|-])", Userinput)
             Solve = parenthesis()
         else: #If power and parenthesis does not exist
-            Solve = re.split("([(|)|*|/|+|^|-])", Userinput)
-        MDAS()
+            Solve = re.split("([|r|(|)|*|/|+|^|-])", Userinput)
+        print(Userinput)
+        print(Solve)
+        PEMDAS()
         if float(Solution[0]).is_integer(): #Integer detector
             Intanswer = ''
             Intanswer = float(Solution[0])
