@@ -28,15 +28,8 @@ def root():
     Root2ndValue = Root + 1
     RootEqual = float(Solve[Root1stValue]) ** (1/float(Solve[Root2ndValue]))
     RootEqual = str(RootEqual)
-    print(RootEqual)
-    print(Solve)
     del Solve[Root1stValue:Root2ndValue + 1]
     Solve.insert(Root1stValue,RootEqual)
-    print(Root)
-    print(Root1stValue)
-    print(Root2ndValue)
-    print(RootEqual)
-    print(Solve)
     return Solve
 
 
@@ -48,11 +41,6 @@ def multiply():
     MultEqual = str(MultEqual)
     del Solve[Mult1stValue:Mult2ndValue + 1]
     Solve.insert(Mult1stValue,MultEqual)
-    # print(Mult)
-    # print(Mult1stValue)
-    # print(Mult2ndValue)
-    # print(MultEqual)
-    # print(Solve)
     return Solve
 
 ##Division
@@ -64,11 +52,6 @@ def divide():
     DivEqual = str(DivEqual)
     del Solve[Div1stValue:Div2ndValue + 1]
     Solve.insert(Div1stValue,DivEqual)
-    # print(Div)
-    # print(Div1stValue)
-    # print(Div2ndValue)
-    # print(DivEqual)
-    # print(Solve)
     return Solve
 
 ##Addition
@@ -80,11 +63,6 @@ def addition():
     AddEqual = str(AddEqual)
     del Solve[Add1stValue:Add2ndValue + 1]
     Solve.insert(Add1stValue,AddEqual)
-    # print(Add)
-    # print(Add1stValue)
-    # print(Add2ndValue)
-    # print(AddEqual)
-    # print(Solve)
     return Solve
 
 ##Subtract
@@ -96,11 +74,6 @@ def subtract():
     SubEqual = str(SubEqual)
     del Solve[Sub1stValue:Sub2ndValue + 1]
     Solve.insert(Sub1stValue,SubEqual)
-    # print(Sub)
-    # print(Sub1stValue)
-    # print(Sub2ndValue)
-    # print(SubEqual)
-    # print(Solve)
     return Solve
 
 ##Test new solve
@@ -112,12 +85,6 @@ def PEMDAS():
             try:
                 Powercount = next(i for i, v in reversed(list(enumerate(Solve))) if '^' == v)
                 Rootcount = next(i for i, v in reversed(list(enumerate(Solve))) if 'r' == v)
-                print(Powercount)
-                print(Rootcount)
-                print(Solution)
-                print(Solve)
-                print(Powercount < Rootcount)
-                print(Rootcount > Powercount)
             except:
                 pass
             if Powercount > Rootcount:
@@ -125,7 +92,6 @@ def PEMDAS():
                 continue
             elif Powercount < Rootcount:
                 Solution = root()
-                print("hello")
                 continue
             else:
                 break
@@ -244,8 +210,6 @@ while True:
             Solve = parenthesis()
         else: #If power and parenthesis does not exist
             Solve = re.split("([|r|(|)|*|/|+|^|-])", Userinput)
-        print(Userinput)
-        print(Solve)
         PEMDAS()
         if float(Solution[0]).is_integer(): #Integer detector
             Intanswer = ''
