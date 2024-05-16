@@ -21,7 +21,7 @@ def power():
     power_equal = str(round(power_equal, decimal))
     del solve[power1st_value:power2nd_value + 1]
     solve.insert(power1st_value, power_equal)
-    print(solve, "Power")
+    # print(solve, "Power")
     return solve
 
 def root():
@@ -32,7 +32,7 @@ def root():
     root_equal = str(round(root_equal, decimal))
     del solve[root1st_value:root2nd_value + 1]
     solve.insert(root1st_value, root_equal)
-    print(solve, "Root")
+    # print(solve, "Root")
     return solve
 
 
@@ -44,7 +44,7 @@ def multiply():
     mult_equal = str(round(mult_equal, decimal))
     del solve[mult1st_value:mult2nd_value + 1]
     solve.insert(mult1st_value, mult_equal)
-    print(solve, "Mult")
+    # print(solve, "Mult")
     return solve
 
 ##Division
@@ -56,7 +56,7 @@ def divide():
     div_equal = str(round(div_equal, decimal))
     del solve[div1st_value:div2nd_value + 1]
     solve.insert(div1st_value, div_equal)
-    print(solve, "Div")
+    # print(solve, "Div")
     return solve
 
 ##Addition
@@ -68,7 +68,7 @@ def addition():
     AddEqual = str(round(AddEqual, decimal))
     del solve[Add1stValue:Add2ndValue + 1]
     solve.insert(Add1stValue, AddEqual)
-    print(solve, "Add")
+    # print(solve, "Add")
     return solve
 
 ##Subtract
@@ -80,7 +80,7 @@ def subtract():
     SubEqual = str(round(SubEqual, decimal))
     del solve[Sub1stValue:Sub2ndValue + 1]
     solve.insert(Sub1stValue, SubEqual)
-    print(solve, "Sub")
+    # print(solve, "Sub")
     return solve
 
 ##check new solve
@@ -89,7 +89,7 @@ def PEMDAS():
     solution = solve
 
     while True:
-        print(solve, "MDAS")
+        # print(solve, "MDAS")
         if power_loop in solution and root_loop in solution:
             try:
                 Powercount = next(i for i, v in reversed(list(enumerate(solve))) if '^' == v)
@@ -159,7 +159,7 @@ def parenthesis():
     while True:
         dup_parenthesis = []
         index_pair = []
-        print(solve, "Parenthesis")
+        # print(solve, "Parenthesis")
         solve_storetemp = list(solve)
         solve = []
         prnthsfirst = next(i for i, v in enumerate(solve_storetemp) if '(' == v)
@@ -175,27 +175,22 @@ def parenthesis():
         for i in range(len(solve_storetemp) - 1):
             if solve_storetemp[i] == ')' and solve_storetemp[i + 1] == '(':
                 dup_parenthesis.append((i, i + 1))
-                print(dup_parenthesis)
-                print(dup_parenthesis[0])
         if dup_parenthesis:
             for index_pair in dup_parenthesis:
                 solve_storetemp.insert(index_pair[0] + 1, "*")
                 solve_storetemp.insert(index_pair[0] + 2, " ")
-                print(solve_storetemp,"indice Temp")
                 dup_parenthesis = []
         SolveAnswer = solve
         solve = []
         del solve_storetemp[prnthsfirst:prnths_scnd]
-        print(solve_storetemp,"Temp save")
         solve_storetemp.insert(prnthsfirst, SolveAnswer[0])
         solve = solve_storetemp
-        print(solve, "Parenthesis2")
         if "(" and ")" not in solve:
             return solve
 
 
 #Continue
-def ASKTOCONTINUE():
+def ASKTOCONTINUE(message):
     while True:
         Userinput = input("Retry? (Y/N): ")
         if Userinput.lower() in ["yes", "y"]:
@@ -233,7 +228,6 @@ while True:
     try:
         if "(" and ")" in Userinput: #Parenthesis Detector, solves them first.
             solve = re.split("([|p|r|(|)|*|/|+|^|-])", Userinput)
-            print(solve)
             solve = parenthesis()
         else: #If power and parenthesis does not exist
             solve = re.split("([|p|r|(|)|*|/|+|^|-])", Userinput)
