@@ -3,175 +3,199 @@
 
 #Setup
 import re
-PowerLoop = "^"
-RootLoop = "r"
-MultLoop = "*"
-DivLoop = "/"
-AddLoop = "+"
-SubLoop = "-"
-Solution = []
+power_loop = "^"
+root_loop = "r"
+mult_loop = "*"
+div_loop = "/"
+add_loop = "+"
+sub_loop = "-"
+solution = []
+decimal = 3
 
 ##Multiplication
 def power():
-    Power = next(i for i, v in reversed(list(enumerate(Solve))) if '^' == v)
-    Power1stValue = Power - 1
-    Power2ndValue = Power + 1
-    PowerEqual = float(Solve[Power1stValue]) ** float(Solve[Power2ndValue])
-    PowerEqual = str(PowerEqual)
-    del Solve[Power1stValue:Power2ndValue + 1]
-    Solve.insert(Power1stValue,PowerEqual)
-    return Solve
+    powerdet = next(i for i, v in reversed(list(enumerate(solve))) if '^' == v)
+    power1st_value = powerdet - 1
+    power2nd_value = powerdet + 1
+    power_equal = float(solve[power1st_value]) ** float(solve[power2nd_value])
+    power_equal = str(round(power_equal, decimal))
+    del solve[power1st_value:power2nd_value + 1]
+    solve.insert(power1st_value, power_equal)
+    print(solve, "Power")
+    return solve
 
 def root():
-    Root = next(i for i, v in reversed(list(enumerate(Solve))) if 'r' == v)
-    Root1stValue = Root - 1
-    Root2ndValue = Root + 1
-    RootEqual = float(Solve[Root1stValue]) ** (1/float(Solve[Root2ndValue]))
-    RootEqual = str(RootEqual)
-    del Solve[Root1stValue:Root2ndValue + 1]
-    Solve.insert(Root1stValue,RootEqual)
-    return Solve
+    rootdet = next(i for i, v in reversed(list(enumerate(solve))) if 'r' == v)
+    root1st_value = rootdet - 1
+    root2nd_value = rootdet + 1
+    root_equal = float(solve[root1st_value]) ** (1 / float(solve[root2nd_value]))
+    root_equal = str(round(root_equal, decimal))
+    del solve[root1st_value:root2nd_value + 1]
+    solve.insert(root1st_value, root_equal)
+    print(solve, "Root")
+    return solve
 
 
 def multiply():
-    Mult = next(i for i, v in enumerate(Solve) if '*' == v)
-    Mult1stValue = Mult - 1
-    Mult2ndValue = Mult + 1
-    MultEqual = float(Solve[Mult1stValue]) * float(Solve[Mult2ndValue])
-    MultEqual = str(MultEqual)
-    del Solve[Mult1stValue:Mult2ndValue + 1]
-    Solve.insert(Mult1stValue,MultEqual)
-    return Solve
+    multdet = next(i for i, v in enumerate(solve) if '*' == v)
+    mult1st_value = multdet - 1
+    mult2nd_value = multdet + 1
+    mult_equal = float(solve[mult1st_value]) * float(solve[mult2nd_value])
+    mult_equal = str(round(mult_equal, decimal))
+    del solve[mult1st_value:mult2nd_value + 1]
+    solve.insert(mult1st_value, mult_equal)
+    print(solve, "Mult")
+    return solve
 
 ##Division
 def divide():
-    Div = next(i for i, v in enumerate(Solve) if '/' == v)
-    Div1stValue = Div - 1
-    Div2ndValue = Div + 1
-    DivEqual = float(Solve[Div1stValue]) / float(Solve[Div2ndValue])
-    DivEqual = str(DivEqual)
-    del Solve[Div1stValue:Div2ndValue + 1]
-    Solve.insert(Div1stValue,DivEqual)
-    return Solve
+    divdet = next(i for i, v in enumerate(solve) if '/' == v)
+    div1st_value = divdet - 1
+    div2nd_value = divdet + 1
+    div_equal = float(solve[div1st_value]) / float(solve[div2nd_value])
+    div_equal = str(round(div_equal, decimal))
+    del solve[div1st_value:div2nd_value + 1]
+    solve.insert(div1st_value, div_equal)
+    print(solve, "Div")
+    return solve
 
 ##Addition
 def addition():
-    Add = next(i for i, v in enumerate(Solve) if '+' == v)
+    Add = next(i for i, v in enumerate(solve) if '+' == v)
     Add1stValue = Add - 1
     Add2ndValue = Add + 1
-    AddEqual = float(Solve[Add1stValue]) + float(Solve[Add2ndValue])
-    AddEqual = str(AddEqual)
-    del Solve[Add1stValue:Add2ndValue + 1]
-    Solve.insert(Add1stValue,AddEqual)
-    return Solve
+    AddEqual = float(solve[Add1stValue]) + float(solve[Add2ndValue])
+    AddEqual = str(round(AddEqual, decimal))
+    del solve[Add1stValue:Add2ndValue + 1]
+    solve.insert(Add1stValue, AddEqual)
+    print(solve, "Add")
+    return solve
 
 ##Subtract
 def subtract():
-    Sub = next(i for i, v in enumerate(Solve) if '-' == v)
+    Sub = next(i for i, v in enumerate(solve) if '-' == v)
     Sub1stValue = Sub - 1
     Sub2ndValue = Sub + 1
-    SubEqual = float(Solve[Sub1stValue]) - float(Solve[Sub2ndValue])
-    SubEqual = str(SubEqual)
-    del Solve[Sub1stValue:Sub2ndValue + 1]
-    Solve.insert(Sub1stValue,SubEqual)
-    return Solve
+    SubEqual = float(solve[Sub1stValue]) - float(solve[Sub2ndValue])
+    SubEqual = str(round(SubEqual, decimal))
+    del solve[Sub1stValue:Sub2ndValue + 1]
+    solve.insert(Sub1stValue, SubEqual)
+    print(solve, "Sub")
+    return solve
 
-##Test new solve
+##check new solve
 def PEMDAS():
-    global Solution
-    Solution = Solve
+    global solution
+    solution = solve
+
     while True:
-        if PowerLoop in Solution and RootLoop in Solution:
+        print(solve, "MDAS")
+        if power_loop in solution and root_loop in solution:
             try:
-                Powercount = next(i for i, v in reversed(list(enumerate(Solve))) if '^' == v)
-                Rootcount = next(i for i, v in reversed(list(enumerate(Solve))) if 'r' == v)
+                Powercount = next(i for i, v in reversed(list(enumerate(solve))) if '^' == v)
+                Rootcount = next(i for i, v in reversed(list(enumerate(solve))) if 'r' == v)
             except:
                 pass
             if Powercount > Rootcount:
-                Solution = power()
+                solution = power()
                 continue
             elif Powercount < Rootcount:
-                Solution = root()
+                solution = root()
                 continue
             else:
                 break
-        elif PowerLoop in Solution or "^" in Solution:
-            Solution = power()
+        elif power_loop in solution or "^" in solution:
+            solution = power()
             continue
-        elif RootLoop in Solution or "r" in Solution:
-            Solution = root()
+        elif root_loop in solution or "r" in solution:
+            solution = root()
             continue
-        elif MultLoop in Solution and DivLoop in Solution:
+        elif mult_loop in solution and div_loop in solution:
             try:
-                Multcounter = next(i for i, v in enumerate(Solve) if '*' == v)
-                Divcounter = next(i for i, v in enumerate(Solve) if '/' == v)
+                Multcounter = next(i for i, v in enumerate(solve) if '*' == v)
+                Divcounter = next(i for i, v in enumerate(solve) if '/' == v)
             except:
                 pass
             if Multcounter < Divcounter:
-                Solution = multiply()
+                solution = multiply()
                 continue
             elif Multcounter > Divcounter:
-                Solution = divide()
+                solution = divide()
                 continue
             else:
                 continue
-        elif MultLoop in Solution:
-            Solution = multiply()
+        elif mult_loop in solution:
+            solution = multiply()
             continue
-        elif DivLoop in Solution:
-            Solution = divide()
+        elif div_loop in solution:
+            solution = divide()
             continue
-        elif AddLoop in Solution and SubLoop in Solution:
+        elif add_loop in solution and sub_loop in solution:
             try:
-                Addcounter = next(i for i, v in enumerate(Solve) if '+' == v)
-                Subcounter = next(i for i, v in enumerate(Solve) if '-' == v)
+                Addcounter = next(i for i, v in enumerate(solve) if '+' == v)
+                Subcounter = next(i for i, v in enumerate(solve) if '-' == v)
             except:
                 pass
             if Addcounter < Subcounter:
-                Solution = addition()
+                solution = addition()
                 continue
             elif Addcounter > Subcounter:
-                Solution = subtract()
+                solution = subtract()
                 continue
             else:
                 continue
-        elif AddLoop in Solution:
-            Solution = addition()
+        elif add_loop in solution:
+            solution = addition()
             continue
-        elif SubLoop in Solution:
-            Solution = subtract()
+        elif sub_loop in solution:
+            solution = subtract()
             continue
         else:
-            break
-    return Solution
+            return solution
 
 #Parenthesis
 def parenthesis():
-    global Solve
+    global solve
     while True:
-        SolveStoretemp = list(Solve)
-        Solve = []
-        Prnthsfirst = next(i for i, v in enumerate(SolveStoretemp) if '(' == v)
-        PrnthsScnd = next(i for i, v in enumerate(SolveStoretemp) if ')' == v)
-        Prnthsfirst = Prnthsfirst - 1 # Space from split remove
-        del SolveStoretemp[Prnthsfirst]
-        del SolveStoretemp[PrnthsScnd]
-        listcounter = Prnthsfirst + 1
-        for i in range (Prnthsfirst,PrnthsScnd-2):
-            Solve.append(SolveStoretemp[listcounter])
+        dup_parenthesis = []
+        index_pair = []
+        print(solve, "Parenthesis")
+        solve_storetemp = list(solve)
+        solve = []
+        prnthsfirst = next(i for i, v in enumerate(solve_storetemp) if '(' == v)
+        prnths_scnd = next(i for i, v in enumerate(solve_storetemp) if ')' == v)
+        prnthsfirst = prnthsfirst - 1 # Space from split remove
+        del solve_storetemp[prnthsfirst]
+        del solve_storetemp[prnths_scnd]
+        listcounter = prnthsfirst + 1
+        for i in range (prnthsfirst,prnths_scnd-2):
+            solve.append(solve_storetemp[listcounter])
             listcounter = listcounter + 1
-        Solve = PEMDAS()
-        SolveAnswer = Solve
-        Solve = []
-        del SolveStoretemp[Prnthsfirst:PrnthsScnd]
-        SolveStoretemp.insert(Prnthsfirst, SolveAnswer[0])
-        Solve = SolveStoretemp
-        if "(" and ")" not in Solve:
-            break
-    return Solve
+        solve = PEMDAS()
+        for i in range(len(solve_storetemp) - 1):
+            if solve_storetemp[i] == ')' and solve_storetemp[i + 1] == '(':
+                dup_parenthesis.append((i, i + 1))
+                print(dup_parenthesis)
+                print(dup_parenthesis[0])
+        if dup_parenthesis:
+            for index_pair in dup_parenthesis:
+                solve_storetemp.insert(index_pair[0] + 1, "*")
+                solve_storetemp.insert(index_pair[0] + 2, " ")
+                print(solve_storetemp,"indice Temp")
+                dup_parenthesis = []
+        SolveAnswer = solve
+        solve = []
+        del solve_storetemp[prnthsfirst:prnths_scnd]
+        print(solve_storetemp,"Temp save")
+        solve_storetemp.insert(prnthsfirst, SolveAnswer[0])
+        solve = solve_storetemp
+        print(solve, "Parenthesis2")
+        if "(" and ")" not in solve:
+            return solve
+
 
 #Continue
-def ASKTOCONTINUE(message):
+def ASKTOCONTINUE():
     while True:
         Userinput = input("Retry? (Y/N): ")
         if Userinput.lower() in ["yes", "y"]:
@@ -189,7 +213,7 @@ print("Simple Calculator")
 print("Note: Solves PEMDAS equations")
 while True:
 
-    Solve = []
+    solve = []
     Userinput = input("Put your math equation: ") #Userentry
     while True:
         if "{" in Userinput: #Convert brackets
@@ -202,21 +226,23 @@ while True:
             Userinput = Userinput.replace('**','^')
         elif "R" in Userinput: #Root Converter
             Userinput = Userinput.replace('R', 'r')
+        # elif ")(" in Userinput: #Parenthesis Fix
+        #     Userinput = Userinput.replace(')(', ')p(')
         else:
             break
     try:
         if "(" and ")" in Userinput: #Parenthesis Detector, solves them first.
-            Solve = re.split("([|r|(|)|*|/|+|^|-])", Userinput)
-            Solve = parenthesis()
+            solve = re.split("([|p|r|(|)|*|/|+|^|-])", Userinput)
+            print(solve)
+            solve = parenthesis()
         else: #If power and parenthesis does not exist
-            Solve = re.split("([|r|(|)|*|/|+|^|-])", Userinput)
+            solve = re.split("([|p|r|(|)|*|/|+|^|-])", Userinput)
         PEMDAS()
-        if float(Solution[0]).is_integer(): #Integer detector
-            Intanswer = ''
-            Intanswer = float(Solution[0])
+        if float(solution[0]).is_integer(): #Integer detector
+            Intanswer = float(solution[0])
             print("The answer is:", int(Intanswer))
         else: #all other answers
-            print("The answer is:", Solution[0])
+            print("The answer is:", solution[0])
         Continue = ASKTOCONTINUE("Continue? Yes or No: ")
         if Continue == "Yes":
             Continue = ""
