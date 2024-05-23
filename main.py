@@ -204,6 +204,7 @@ def ASKTOCONTINUE(message):
     return Userinput
 
 #Calc
+#code check
 print("Simple Calculator")
 print("Note: Solves PEMDAS equations")
 while True:
